@@ -7,11 +7,9 @@
 
 int	main(void)
 {
-	t_tilemap	*tilemap;
-
-
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
 
+	t_tilemap	*tilemap;
 	tilemap = ft_create_tilemap("res/spritesheet.png", 32, 32);
 
 	while (!WindowShouldClose())
