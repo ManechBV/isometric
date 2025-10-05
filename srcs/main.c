@@ -7,17 +7,17 @@ int	main()
 	InitWindow(1280, 720, "Hello");
 	SetTargetFPS(60);
 
-	Texture2D	tileset_texture = LoadTexture("res/isometric-sandbox-sheet.png");
+	Texture2D	tileset_texture = LoadTexture("res/spritesheet.png");
 	t_tileset	tileset = create_tileset(tileset_texture, 32, 32);
 
-	t_tilemap	tilemap = create_tilemap(&tileset, 16, 16, 0);
+	t_tilemap	tilemap = create_tilemap(&tileset, 32, 32, 0);
 
 	// temp loop to generate random map
 	for (int x = 0; x < tilemap.width; x++)
 	{
 		for (int y = 0; y < tilemap.height; y++)
 		{
-			tilemap.map[y][x] = GetRandomValue(0, 32);
+			tilemap.map[y][x] = GetRandomValue(0, 50);
 		}
 	}
 
