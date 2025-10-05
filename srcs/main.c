@@ -1,25 +1,51 @@
 #include "raylib.h"
-
-#include "utils.h"
+#include "tileset.h"
 #include "tilemap.h"
 
-#include <stdlib.h>
-
-int	main(void)
+int	main()
 {
-	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
+	InitWindow(1280, 720, "Hello");
+	SetTargetFPS(60);
 
-	t_tilemap	*tilemap;
-	tilemap = ft_create_tilemap("res/spritesheet.png", 32, 32);
+	Texture2D	tileset_texture = LoadTexture("res/isometric-sandbox-sheet.png");
+	t_tileset	tileset = create_tileset(tileset_texture, 32, 32);
 
-	while (!WindowShouldClose())
+	t_tilemap	tilemap = create_tilemap(&tileset, 16, 16, 0);
+
+	// temp loop to generate random map
+	for (int x = 0; x < tilemap.width; x++)
 	{
-		BeginDrawing();
-		ClearBackground(DARKGRAY);
-		EndDrawing();
+		for (int y = 0; y < tilemap.height; y++)
+		{
+			tilemap.map[y][x] = GetRandomValue(0, 32);
+		}
 	}
 
-	ft_free_tilemap(tilemap);
+	bool	running = true;
+	while (running)
+	{
+		//Update game
+
+		
+		//Draw game
+		BeginDrawing();
+
+		ClearBackground(DARKGRAY);
+
+		//_draw_tileset(tileset);
+		draw_tilemap(&tilemap, (Vector2){640, 100});
+
+		EndDrawing();
+	
+		//Condition to stop the loop
+		if (WindowShouldClose())
+			running = false;
+	}
+	tilemap.width = 0;
+	
+	free_tilemap(&tilemap);
+	free_tileset(&tileset);
+	
 	CloseWindow();
 	return (0);
 }

@@ -12,7 +12,7 @@ OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Compilateur et options
 CC      = gcc
-CFLAGS  = -Wall -Wextra -Werror -I$(INC_DIR) -g
+CFLAGS  = -Wall -Wextra -I$(INC_DIR) -g
 
 # Librairies (raylib + dépendances sous WSL/Linux)
 LIBS    = -lraylib -lm -ldl -lpthread -lGL -lX11

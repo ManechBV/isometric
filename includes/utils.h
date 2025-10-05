@@ -1,8 +1,8 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
-# define WINDOW_TITLE "Isometric cest facile ou pas ?"
+# include "raylib.h"
+
+Vector2	coord_to_iso(Vector2 vec, int tile_w, int tile_h);
 
 #endif

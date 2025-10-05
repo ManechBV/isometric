@@ -1,17 +1,21 @@
 #ifndef TILEMAP_H
 # define TILEMAP_H
 
-# include "raylib.h" 
+# include "tileset.h"
+# include "raylib.h"
 
-typedef struct s_tilemap
+typedef struct	s_tilemap
 {
-	Texture2D	sprite_sheet;
-	Rectangle	draw_rect;
+	t_tileset	*tileset;
+	int			**map;
+	int			width;
+	int			height;
 } t_tilemap;
 
-//tilemap.c
-t_tilemap	*ft_create_tilemap(char *filename, float tile_size_x, float tile_size_y);
-
-void	ft_free_tilemap(t_tilemap *tilemap);
+t_tilemap	create_tilemap(t_tileset *tileset, int width, int height, int fill);
+void		set_tile(t_tilemap *tilemap, int x, int y, int value);
+int			get_tile(t_tilemap *tilemap, int x, int y);
+void		free_tilemap(t_tilemap *tilemap);
+void		draw_tilemap(t_tilemap *tilemap, Vector2 position);
 
 #endif
