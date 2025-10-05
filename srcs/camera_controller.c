@@ -12,6 +12,15 @@ void	move_camera_screen_border(Camera2D *camera, int margin, int speed)
 		camera->target.y += speed;
 }
 
+void	move_camera_middle_mouse(Camera2D *camera, float amount)
+{
+	if (IsMouseButtonDown(2))
+	{
+		camera->target.x -= GetMouseDelta().x / amount;
+		camera->target.y -= GetMouseDelta().y / amount;
+	}
+}
+
 void	zoom_camera_mouse_wheel(Camera2D *camera, float amount)
 {
 	camera->zoom += GetMouseWheelMove() * amount;

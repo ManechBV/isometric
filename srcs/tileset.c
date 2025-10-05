@@ -9,7 +9,7 @@ t_tile		create_tile(Texture2D texture, float x, float y, float w, float h)
 	return (tile);
 }
 
-t_tileset	create_tileset(Texture2D texture, int tile_w, int tile_h)
+t_tileset	create_tileset(Texture2D texture, int tile_w, int tile_h, char *image_name)
 {
 	t_tileset	tileset;
 
@@ -32,6 +32,8 @@ t_tileset	create_tileset(Texture2D texture, int tile_w, int tile_h)
 	}
 	tileset.tile_w = tile_w;
 	tileset.tile_h = tile_h;
+
+	tileset.image_name = image_name;
 
 	return (tileset);
 }

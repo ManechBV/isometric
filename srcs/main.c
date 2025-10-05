@@ -1,17 +1,34 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+#include "utils.h"
 #include "raylib.h"
 #include "tileset.h"
 #include "tilemap.h"
 #include "camera_controller.h"
 
-int	main()
+int	main(int argc, char **argv)
 {
-	InitWindow(1280, 720, "Hello");
-	SetTargetFPS(60);
+	InitWindow(1280, 720, argv[0]);
+	//SetTargetFPS(60);
 
-	Texture2D	tileset_texture = LoadTexture("res/spritesheet.png");
-	t_tileset	tileset = create_tileset(tileset_texture, 32, 32);
+	char	*spritesheet_path;
+	int		arg_tile_w = 32;
+	int		arg_tile_h = 32;
+	if (argc > 3)
+	{
+		spritesheet_path = argv[1];
+		arg_tile_w = atoi(argv[2]);
+		arg_tile_h = atoi(argv[3]);
+	}
+	else
+		spritesheet_path = "res/spritesheet.png";
+		
+	Texture2D	tileset_texture = LoadTexture(spritesheet_path);
+	t_tileset	tileset = create_tileset(tileset_texture, arg_tile_w, arg_tile_h, spritesheet_path);
 
-	t_tilemap	tilemap = create_tilemap(&tileset, 32, 32, 0);
+	t_tilemap	tilemap = create_tilemap(&tileset, 64, 64, 0);
 
 	Camera2D	camera = {0};
 	camera.target = (Vector2){640, 300};
@@ -24,16 +41,22 @@ int	main()
 	{
 		for (int y = 0; y < tilemap.height; y++)
 		{
-			tilemap.map[y][x] = GetRandomValue(0, 50);
+			tilemap.map[y][x] = GetRandomValue(0, tileset.size - 1);
 		}
 	}
+
+	// TEST N SHIT
+	char	*tilemap_str = tilemap_to_str(&tilemap);
+	printf("tilemap_str:\n|%s|\n", tilemap_str);
 
 	bool	running = true;
 	while (running)
 	{
 		//Update game
-		move_camera_screen_border(&camera, 20, 4);
-		zoom_camera_mouse_wheel(&camera, 0.2);
+		// Update camera
+			//move_camera_screen_border(&camera, 20, 4);
+			move_camera_middle_mouse(&camera, camera.zoom);
+			zoom_camera_mouse_wheel(&camera, 0.1);
 		
 		//Draw game
 		BeginDrawing();
@@ -44,6 +67,7 @@ int	main()
 				draw_tilemap(&tilemap, (Vector2){640, 100});
 			EndMode2D();
 
+		DrawFPS(10, 10);
 		EndDrawing();
 	
 		//Condition to stop the loop

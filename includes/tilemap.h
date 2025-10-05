@@ -17,5 +17,6 @@ void		set_tile(t_tilemap *tilemap, int x, int y, int value);
 int			get_tile(t_tilemap *tilemap, int x, int y);
 void		free_tilemap(t_tilemap *tilemap);
 void		draw_tilemap(t_tilemap *tilemap, Vector2 position);
+char		*tilemap_to_str(t_tilemap *tilemap);
 
 #endif

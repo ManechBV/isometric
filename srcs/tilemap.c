@@ -1,6 +1,7 @@
 #include "tilemap.h"
 #include "utils.h"
 #include <stdlib.h>
+#include <string.h>
 
 
 t_tilemap	create_tilemap(t_tileset *tileset, int width, int height, int fill)
@@ -41,6 +42,50 @@ void	draw_tilemap(t_tilemap *tilemap, Vector2 position)
 			}); 
 		}
 	}
+}
+
+char	*tilemap_to_str(t_tilemap *tilemap)
+{
+	int	size = 0;
+
+	//the first line of the file should be in this format: "WIDTH:HEIGHT\n", example: "64:64\n"
+	size += num_len(tilemap->width) + 1 +  num_len(tilemap->width) + 1;
+
+	//the second line of the file should be the path to the spritesheet image that must be placed in res/
+	size += strlen(tilemap->tileset->image_name) + 1;	//\n at the end of course
+
+	//the third and last line of the file sould be all the tiles values from top left to bottom right separated by ':'
+	for (int x = 0; x < tilemap->width; x++)
+	{
+		for (int y = 0; y < tilemap->height; y++)
+			size += num_len((tilemap->map)[y][x]) + 1;
+	}
+	size++; // '\0'
+
+	char	*str = malloc(sizeof(char) * size);
+	str[0] = '\0';
+
+	//first line
+	strcat(str, ft_itoa(tilemap->width));
+	strcat(str, ":");
+	strcat(str, ft_itoa(tilemap->height));
+	strcat(str, "\n");
+	
+	//second line
+	strcat(str, tilemap->tileset->image_name);
+	strcat(str, "\n");
+
+	//third line
+	for (int x = 0; x < tilemap->width; x++)
+	{
+		for (int y = 0; y < tilemap->height; y++)
+		{
+			strcat(str, ft_itoa((tilemap->map)[y][x]));
+			strcat(str, ":");
+		}
+	}
+
+	return (str);
 }
 
 void	set_tile(t_tilemap *tilemap, int x, int y, int value)
